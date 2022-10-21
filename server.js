@@ -77,7 +77,7 @@ app.post("/api/noteDEL", function (req, res) {
     array2.sort(function (a, b) {
         return a.id - b.id;
     });
-
+    console.log(array2);
     fs.writeFile(
         __dirname + "/db/db.json",
         JSON.stringify(array2),
