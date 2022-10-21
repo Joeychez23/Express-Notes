@@ -99,7 +99,7 @@ newNoteBtn.addEventListener("click", async function () {
   saveNoteBtn.style.display = 'none';
   const checkId =  await getData();
   if(checkId > 0) {
-    for(let i = 0; i < checkId.length; i++) {
+    for(let i = checkId.length - 1; i < checkId.length; i++) {
       if(i + 1 == checkId.length) {
         currId = checkId[i].id + 1;
       }
@@ -211,24 +211,3 @@ async function delFunc(index) {
 
 
 
-
-
-
-
-
-
-
-// Gets notes from the db and renders them to the sidebar
-//const getAndRenderNotes = () => getNotes().then(renderNoteList);
-/*
-if (window.location.pathname === '/notes') {
-  saveNoteBtn.addEventListener('click', handleNoteSave);
-  newNoteBtn.addEventListener('click', handleNewNoteView);
-  noteTitle.addEventListener('keyup', handleRenderSaveBtn);
-  noteText.addEventListener('keyup', handleRenderSaveBtn);
-}
-*/
-/*
-getAndRenderNotes();
-
-*/
