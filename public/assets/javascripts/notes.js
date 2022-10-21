@@ -189,6 +189,7 @@ async function delFunc(index) {
     text: noteText.value,
   };
   await delData(input);
+  const data = await getData();
   try {
     let span = document.getElementsByTagName("span")[index - 1];
     let i = document.getElementsByTagName("i")[index + 2 - 1];
