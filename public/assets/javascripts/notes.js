@@ -100,7 +100,7 @@ newNoteBtn.addEventListener("click", async function () {
   const checkId =  await getData();
   if(checkId > 0) {
     for(let i = checkId.length - 1; i < checkId.length; i++) {
-      if(i + 1 == checkId.length) {
+      if(i + 2 == checkId.length) {
         currId = checkId[i].id + 1;
       }
     }
