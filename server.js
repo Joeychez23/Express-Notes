@@ -23,7 +23,9 @@ app.get("/notes", function (req, res) {
 });
 
 app.get("/api/noteGET", function (req, res) {
+    console.log(db)
     res.json(db);
+
 });
 
 app.post("/api/notePOST", function (req, res) {
