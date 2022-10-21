@@ -98,24 +98,29 @@ renderNotes();
 newNoteBtn.addEventListener("click", async function () {
   saveNoteBtn.style.display = 'none';
   const checkId =  await getData();
-  if(checkId > 0) {
+
+  if(checkId.length > 0) {
     for(let i = checkId.length - 1; i < checkId.length; i++) {
-      if(i + 2 == checkId.length) {
+      if(i + 1 == checkId.length) {
         currId = checkId[i].id + 1;
+        console.log(currId)
       }
     }
   }
+  console.log(currId)
   let input = {
     id: currId,
     title: noteTitle.value,
     text: noteText.value,
   };
+  console.log(input);
   await addData(input);
   const data = await getData();
   let list = document.getElementsByTagName("li")[0];
   for (let i = data.length - 1; i < data.length; i++) {
     if (i + 1 == data.length) {
       currId = data[i].id + 1;
+      console.log(currId)
     }
     const spanEl = document.createElement("span");
     spanEl.classList.add("list-item-title");

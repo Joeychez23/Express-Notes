@@ -64,15 +64,16 @@ app.post("/api/notePOST", function (req, res) {
 
 app.post("/api/noteDEL", function (req, res) {
     let data = req.body;
+    console.log(data.id)
     console.log(req.method);
     let array = db;
-    let array2 = new Array
+    let array2 = [];
     for (let i = 0; i < array.length; i++) {
         if (array[i].id != data.id) {
             array2[array2.length] = array[i];
         }
     }
-    console.log(array2)
+    //console.log(array2)
     for (let i = 0; i < array2.length; i++) {
         array2[i].id = i + 1;
     }
