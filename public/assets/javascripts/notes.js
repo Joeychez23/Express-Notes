@@ -27,7 +27,6 @@ async function getData() {
 }
 
 async function addData(input) {
-
   const options = {
     method: "POST",
     headers: {
@@ -40,11 +39,7 @@ async function addData(input) {
   return data;
 }
 
-
-
-
 async function delData(input) {
-
   const options = {
     method: "POST",
     headers: {
@@ -56,8 +51,6 @@ async function delData(input) {
   const data = await getData.json();
   return data;
 }
-
-
 
 listGroup = document.querySelector(".list-group");
 let currId;
@@ -96,57 +89,61 @@ async function renderNotes() {
 renderNotes();
 
 newNoteBtn.addEventListener("click", async function () {
-  saveNoteBtn.style.display = 'none';
-  const checkId =  await getData();
+  console.log(noteTitle.value);
+  if (noteTitle.value != "") {
+    saveNoteBtn.style.display = "none";
+    const checkId = await getData();
 
-  if(checkId.length > 0) {
-    for(let i = checkId.length - 1; i < checkId.length; i++) {
-      if(i + 1 == checkId.length) {
-        currId = checkId[i].id + 1;
-        console.log(currId)
+    if (checkId.length > 0) {
+      for (let i = checkId.length - 1; i < checkId.length; i++) {
+        if (i + 1 == checkId.length) {
+          currId = checkId[i].id + 1;
+          console.log(currId);
+        }
       }
     }
-  }
-  console.log(currId)
-  let input = {
-    id: currId,
-    title: noteTitle.value,
-    text: noteText.value,
-  };
-  console.log(input);
-  await addData(input);
-  const data = await getData();
-  let list = document.getElementsByTagName("li")[0];
-  for (let i = data.length - 1; i < data.length; i++) {
-    if (i + 1 == data.length) {
-      currId = data[i].id + 1;
-      console.log(currId)
+    console.log(currId);
+    let input = {
+      id: currId,
+      title: noteTitle.value,
+      text: noteText.value,
+    };
+    console.log(input);
+    await addData(input);
+    const data = await getData();
+    let list = document.getElementsByTagName("li")[0];
+    for (let i = data.length - 1; i < data.length; i++) {
+      if (i + 1 == data.length) {
+        currId = data[i].id + 1;
+        console.log(currId);
+      }
+      const spanEl = document.createElement("span");
+      spanEl.classList.add("list-item-title");
+      spanEl.setAttribute("onclick", `setActive(${data[i].id})`);
+      spanEl.setAttribute("id", `${data[i].id}`);
+      spanEl.innerText = data[i].title;
+      list.append(spanEl);
+      const delBtnEl = document.createElement("i");
+      delBtnEl.classList.add(
+        "fas",
+        "fa-trash-alt",
+        "float-right",
+        "text-danger",
+        "delete-note"
+      );
+      delBtnEl.setAttribute("id", `${data[i].id}i`);
+      delBtnEl.setAttribute("onclick", `delFunc(${data[i].id})`);
+      list.append(delBtnEl);
+      //noteTitle.value = "";
+      //noteText.value = "";
     }
-    const spanEl = document.createElement("span");
-    spanEl.classList.add("list-item-title");
-    spanEl.setAttribute("onclick", `setActive(${data[i].id})`);
-    spanEl.setAttribute("id", `${data[i].id}`);
-    spanEl.innerText = data[i].title;
-    list.append(spanEl);
-    const delBtnEl = document.createElement("i");
-    delBtnEl.classList.add(
-      "fas",
-      "fa-trash-alt",
-      "float-right",
-      "text-danger",
-      "delete-note"
-    );
-    delBtnEl.setAttribute("id", `${data[i].id}i`);
-    delBtnEl.setAttribute("onclick", `delFunc(${data[i].id})`);
-    list.append(delBtnEl);
-    noteTitle.value = ''
-    noteText.value = ''
+    noteTitle.value = "";
+    noteText.value = "";
   }
-
 });
 
 async function setActive(index) {
-  saveNoteBtn.style.display = 'inline'
+  saveNoteBtn.style.display = "inline";
   prevActive = true;
   const data = await getData();
   for (let i = 0; i < data.length; i++) {
@@ -154,37 +151,34 @@ async function setActive(index) {
       currId = data[i].id;
       noteTitle.value = `${data[i].title}`;
       noteText.value = data[i].text;
-      saveNoteBtn.style.display = 'inline';
-
+      saveNoteBtn.style.display = "inline";
     }
   }
-
 }
 
 saveNoteBtn.addEventListener("click", async function () {
-  let input = {
-    id: currId,
-    title: noteTitle.value,
-    text: noteText.value,
-  };
-  await addData(input);
-  const data = await getData();
-  let index;
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].id == currId) {
-      index = i;
+  if (noteTitle.value != "") {
+    let input = {
+      id: currId,
+      title: noteTitle.value,
+      text: noteText.value,
+    };
+    await addData(input);
+    const data = await getData();
+    let index;
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].id == currId) {
+        index = i;
+      }
     }
+    let changeHTML = document.getElementById(`${currId}`);
+    changeHTML.innerText = `${data[index].title}`;
+    noteTitle.value = "";
+    noteText.value = "";
+    newNoteBtn.style.display = "inline";
+    saveNoteBtn.style.display = "none";
   }
-  let changeHTML = document.getElementById(`${currId}`);
-  changeHTML.innerText = `${data[index].title}`;
-  noteTitle.value = '';
-  noteText.value = '';
-  newNoteBtn.style.display = 'inline'
-  saveNoteBtn.style.display = 'none'
-
-
-})
-
+});
 
 async function delFunc(index) {
   currId = index;
@@ -202,17 +196,8 @@ async function delFunc(index) {
     i.remove();
   } catch {
     let span = document.getElementById(`${index}`);
-    span.setAttribute("class", "invis")
+    span.setAttribute("class", "invis");
     let i = document.getElementById(`${index}i`);
     i.setAttribute("class", "invis");
   }
 }
-
-
-
-
-
-
-
-
-
