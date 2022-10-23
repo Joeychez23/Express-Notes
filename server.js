@@ -6,6 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const port = process.env.PORT || 3000;
 
+
 app.use(express.static(__dirname + "/public"));
 app.use(express.json({ limit: "1mb" }));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,12 +23,17 @@ app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname + "/public/notes.html"));
 });
 
+
+//GET data request 
 app.get("/api/noteGET", function (req, res) {
     console.log(db)
     res.json(db);
 
 });
 
+
+
+//POST data request (add and overwrite)
 app.post("/api/notePOST", function (req, res) {
     let data = req.body;
     console.log(data)
@@ -62,6 +68,8 @@ app.post("/api/notePOST", function (req, res) {
     res.json(array);
 });
 
+
+//DELETE data request
 app.post("/api/noteDEL", function (req, res) {
     let data = req.body;
     console.log(data.id)

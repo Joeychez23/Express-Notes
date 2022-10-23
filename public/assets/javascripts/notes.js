@@ -14,6 +14,8 @@ if (window.location.pathname === "/notes") {
 
 let prevActive = false;
 
+
+//GET request data function
 async function getData() {
   const options = {
     method: "GET",
@@ -26,6 +28,8 @@ async function getData() {
   return data;
 }
 
+
+//POST request data function
 async function addData(input) {
   const options = {
     method: "POST",
@@ -39,6 +43,8 @@ async function addData(input) {
   return data;
 }
 
+
+//DELETE request data function
 async function delData(input) {
   const options = {
     method: "POST",
@@ -55,6 +61,8 @@ async function delData(input) {
 listGroup = document.querySelector(".list-group");
 let currId;
 
+
+//Renders current notes saved in the database
 async function renderNotes() {
   let data = await getData();
   if (data.length == 0) {
@@ -88,6 +96,10 @@ async function renderNotes() {
 }
 renderNotes();
 
+
+
+
+//Allows the new notes button to have the functionaity to add a new note 
 newNoteBtn.addEventListener("click", async function () {
   console.log(noteTitle.value);
   if (noteTitle.value != "") {
@@ -134,14 +146,15 @@ newNoteBtn.addEventListener("click", async function () {
       delBtnEl.setAttribute("id", `${data[i].id}i`);
       delBtnEl.setAttribute("onclick", `delFunc(${data[i].id})`);
       list.append(delBtnEl);
-      //noteTitle.value = "";
-      //noteText.value = "";
     }
     noteTitle.value = "";
     noteText.value = "";
   }
 });
 
+
+
+//Sets the textboxs to the values of saved notes
 async function setActive(index) {
   saveNoteBtn.style.display = "inline";
   prevActive = true;
@@ -156,6 +169,8 @@ async function setActive(index) {
   }
 }
 
+
+//Allows the save button to have the functionaity to overwrite a note from database
 saveNoteBtn.addEventListener("click", async function () {
   if (noteTitle.value != "") {
     let input = {
@@ -180,6 +195,8 @@ saveNoteBtn.addEventListener("click", async function () {
   }
 });
 
+
+//Allows the delete button to have the functionaity to delete a note from database
 async function delFunc(index) {
   currId = index;
   let input = {
