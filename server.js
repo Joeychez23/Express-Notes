@@ -73,7 +73,6 @@ app.post("/api/noteDEL", function (req, res) {
             array2[array2.length] = array[i];
         }
     }
-    //console.log(array2)
     for (let i = 0; i < array2.length; i++) {
         array2[i].id = i + 1;
     }
