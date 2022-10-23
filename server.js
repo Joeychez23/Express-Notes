@@ -76,11 +76,14 @@ app.post("/api/noteDEL", function (req, res) {
     console.log(req.method);
     let array = db;
     let array2 = [];
+    let count = 0;
     for (let i = 0; i < array.length; i++) {
-        if (array[i].id != data.id) {
-            array2[array2.length] = array[i];
+        if (array[i].id == data.id) {    
+            array.splice(i, 1);
         }
     }
+    array2 = array
+    console.log(array2);
     for (let i = 0; i < array2.length; i++) {
         array2[i].id = i + 1;
     }

@@ -206,15 +206,20 @@ async function delFunc(index) {
   };
   await delData(input);
   const data = await getData();
-  try {
-    let span = document.getElementsByTagName("span")[index - 1];
-    let i = document.getElementsByTagName("i")[index + 2 - 1];
-    span.remove();
-    i.remove();
-  } catch {
-    let span = document.getElementById(`${index}`);
-    span.setAttribute("class", "invis");
-    let i = document.getElementById(`${index}i`);
-    i.setAttribute("class", "invis");
+  let span = document.getElementById(`${index}`);
+  span.setAttribute("class", "invis");
+  let i = document.getElementById(`${index}i`);
+  i.setAttribute("class", "invis");
+  span.remove();
+  i.remove();
+  let spanArr = document.getElementsByTagName('span');
+  let iArr = document.getElementsByTagName('i');
+  for (let i = 0; i < spanArr.length; i++) {
+    spanArr[i].setAttribute("id", `${data[i].id}`);
+    spanArr[i].setAttribute("onclick", `setActive(${data[i].id})`);
+  }
+  for (let i = 2; i < iArr.length; i++) {
+    iArr[i].setAttribute("id", `${data[i - 2].id}i`);
+    iArr[i].setAttribute("onclick", `delFunc(${data[i - 2].id})`);
   }
 }
