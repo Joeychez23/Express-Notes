@@ -152,7 +152,7 @@ newNoteBtn.addEventListener("click", async function () {
   }
 });
 
-
+let pageId;
 
 //Sets the textboxs to the values of saved notes
 async function setActive(index) {
@@ -162,6 +162,7 @@ async function setActive(index) {
   for (let i = 0; i < data.length; i++) {
     if (data[i].id == index) {
       currId = data[i].id;
+      pageId = currId;
       noteTitle.value = `${data[i].title}`;
       noteText.value = data[i].text;
       saveNoteBtn.style.display = "inline";
@@ -178,6 +179,8 @@ saveNoteBtn.addEventListener("click", async function () {
       title: noteTitle.value,
       text: noteText.value,
     };
+    const check = await getData();
+
     await addData(input);
     const data = await getData();
     let index;
@@ -198,12 +201,17 @@ saveNoteBtn.addEventListener("click", async function () {
 
 //Allows the delete button to have the functionaity to delete a note from database
 async function delFunc(index) {
+  console.log(pageId)
   currId = index;
+  if(pageId == currId) {
+    saveNoteBtn.style.display = "none";
+  }
   let input = {
     id: currId,
     title: noteTitle.value,
     text: noteText.value,
   };
+  console.log(index);
   await delData(input);
   const data = await getData();
   let span = document.getElementById(`${index}`);
