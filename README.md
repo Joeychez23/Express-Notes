@@ -21,7 +21,7 @@ Using Node.js a server is provisioned so values can be saved to a file as long a
 
 ## Usage
 
-1. run "npm start" or "nodemon index.js" in terminal to begin
+1. run "npm start" or "node index.js" in terminal to begin
 2. Load "index.html" on localhost port 3000
 
 ## Output
