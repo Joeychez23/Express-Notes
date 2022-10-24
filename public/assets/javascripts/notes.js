@@ -179,7 +179,6 @@ saveNoteBtn.addEventListener("click", async function () {
       title: noteTitle.value,
       text: noteText.value,
     };
-    const check = await getData();
 
     await addData(input);
     const data = await getData();
@@ -201,10 +200,11 @@ saveNoteBtn.addEventListener("click", async function () {
 
 //Allows the delete button to have the functionaity to delete a note from database
 async function delFunc(index) {
-  console.log(pageId)
   currId = index;
   if(pageId == currId) {
     saveNoteBtn.style.display = "none";
+    noteTitle.value = "";
+    noteText.value = "";
   }
   let input = {
     id: currId,
